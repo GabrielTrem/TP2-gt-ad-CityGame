@@ -15179,6 +15179,14 @@ PrefabInstance:
       propertyPath: pickupAudioClipVolume
       value: 0.3
       objectReference: {fileID: 0}
+    - target: {fileID: 2558059367485436822, guid: 57e4fb2497247b4439aa63e4870cfb12, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2558059367485436822, guid: 57e4fb2497247b4439aa63e4870cfb12, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2981316287729991673, guid: 57e4fb2497247b4439aa63e4870cfb12, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -15218,6 +15226,14 @@ PrefabInstance:
     - target: {fileID: 2981316287729991673, guid: 57e4fb2497247b4439aa63e4870cfb12, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3916159980624203142, guid: 57e4fb2497247b4439aa63e4870cfb12, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5043907007508551171, guid: 57e4fb2497247b4439aa63e4870cfb12, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9202468205550356941, guid: 57e4fb2497247b4439aa63e4870cfb12, type: 3}
       propertyPath: m_Name

@@ -4,5 +4,5 @@
 public class CharacterSpawnPoint : MonoBehaviour
 {
     public Vector3 Position => transform.position;
-    public bool IsAvailable;
+    public bool IsAvailable { get; set; } = true;
 }

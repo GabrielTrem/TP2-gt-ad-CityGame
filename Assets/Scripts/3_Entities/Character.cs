@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -39,7 +40,6 @@ public class Character : MonoBehaviour, IDestination
 
     [Header("Movement")]
     [SerializeField, Min(0)] private float destinationReachedDistance = 0.5f;
-    [SerializeField] private Vector3 initialDestination;
 
     private GameManager gameManager;
     private CharacterStateMachine stateMachine;
@@ -73,24 +73,27 @@ public class Character : MonoBehaviour, IDestination
         // TODO : Placer le personnage à un endroit aléatoire.
         //        Notez que le Game Manager dispose de la liste des spawn points.  À vous de les utiliser judicieusement
         //        
-        foreach (CharacterSpawnPoint Position in gameManager.CityObjects.CharacterSpawnPoints)
+        var spawnPoints = gameManager.CityObjects.CharacterSpawnPoints;
+
+        var availablePoints = spawnPoints.Where(sp => sp.IsAvailable).ToList();
+
+        if (availablePoints.Count == 0)
         {
-            if(this.isAvailable)
-        };
+            Debug.LogWarning($"Aucun point d'apparition disponible pour {FullName}. Le personnage sera placé à (0,0,0).");
+            transform.position = Vector3.zero;
+            return;
+        }
+
+        var chosenPoint = availablePoints[UnityEngine.Random.Range(0, availablePoints.Count)];
+
+        transform.position = chosenPoint.Position;
+
+        chosenPoint.IsAvailable = false;
     }
 
     // TODO : Enlever la méthode Start. Ce n'est que pour la courte démo quand vous partez le jeu la première fois.
     //        Enlever aussi le [SerializedField] "initialDestination" par la même occasion.
     //        Vous pourrez mettre une nouvelle méthode Start si vous en avez besoin.
-    private IEnumerator Start()
-    {
-        // Move.
-        navMeshAgent.SetDestination(initialDestination);
-        yield return new WaitUntil(() => Vector3.Distance(transform.position, initialDestination) < destinationReachedDistance);
-        
-        // Greet.
-        characterAnimation.PlayGreetAnimation();
-    }
 
     public void NavigateTo(IDestination destination)
     {
@@ -244,4 +247,6 @@ public class Character : MonoBehaviour, IDestination
     {
         ShowPointer(false);
     }
+
+
 }

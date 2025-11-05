@@ -71,7 +71,12 @@ public class Character : MonoBehaviour, IDestination
 
         // Init starting position.
         // TODO : Placer le personnage à un endroit aléatoire.
-        //        Notez que le Game Manager dispose de la liste des spawn points.  À vous de les utiliser judicieusement    
+        //        Notez que le Game Manager dispose de la liste des spawn points.  À vous de les utiliser judicieusement
+        //        
+        foreach (CharacterSpawnPoint Position in gameManager.CityObjects.CharacterSpawnPoints)
+        {
+            if(this.isAvailable)
+        };
     }
 
     // TODO : Enlever la méthode Start. Ce n'est que pour la courte démo quand vous partez le jeu la première fois.

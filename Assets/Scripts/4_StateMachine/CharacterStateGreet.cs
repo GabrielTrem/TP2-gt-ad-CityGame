@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class CharacterStatePickUpTrash : CharacterState
+public class CharacterStateGreet : CharacterState
 {
     public override void MoveCharacter()
     {
-        //character.PickUpTrash();
+        //character.GreetCharacter();
     }
     public override void ManageStateChange()
     {

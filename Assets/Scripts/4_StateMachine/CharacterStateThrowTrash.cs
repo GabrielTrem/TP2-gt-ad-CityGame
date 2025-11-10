@@ -1,7 +1,17 @@
 using UnityEngine;
 
-public class CharacterStateThrowTrash : MonoBehaviour
+public class CharacterStateThrowTrash : CharacterState
 {
+    public override void ManageStateChange()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void MoveCharacter()
+    {
+        throw new System.NotImplementedException();
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {

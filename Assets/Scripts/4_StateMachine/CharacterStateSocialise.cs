@@ -1,16 +1,17 @@
 using UnityEngine;
 
-public class CharacterState1 : MonoBehaviour
+public class CharacterStateSocialise : CharacterState
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public override void MoveCharacter()
     {
-        
+        characterVitals.LowerLoneliness();
     }
-
-    // Update is called once per frame
-    void Update()
+    public override void ManageStateChange()
     {
-        
+        if (characterVitals.IsLonelinessBellowTarget)
+        {
+            character.MakeVisible();
+            characterStateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.MoveToDestination);
+        }
     }
 }

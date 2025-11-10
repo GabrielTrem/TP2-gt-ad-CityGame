@@ -1,16 +1,19 @@
 using UnityEngine;
 
-public class CharacterStateWork : MonoBehaviour
+public class CharacterStateWork : CharacterState
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
+    public override void MoveCharacter()
     {
-        
+        characterVitals.RaiseHunger();
+        characterVitals.RaiseLoneliness();
+        characterVitals.RaiseSleepiness();
+    }
+    public override void ManageStateChange()
+    {
+        if (characterVitals.IsHungerAboveThreshold || characterVitals.IsLonelinessAboveThreshold || characterVitals.IsSleepinessAboveThreshold)
+        {
+            characterStateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.MoveToDestination);
+        }
     }
 }

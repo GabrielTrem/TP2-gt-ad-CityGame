@@ -1,16 +1,18 @@
 using UnityEngine;
 
-public class CharacterStateSleep : MonoBehaviour
+public class CharacterStateSleep : CharacterState
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public override void MoveCharacter()
     {
-        
+        characterVitals.LowerSleepiness();
+    }
+    public override void ManageStateChange()
+    {
+        if (characterVitals.IsSleepinessBellowTarget)
+        {
+            character.MakeVisible();
+            characterStateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.MoveToDestination);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

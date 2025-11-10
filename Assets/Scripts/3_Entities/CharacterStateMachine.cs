@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Unity.VisualScripting;
+using UnityEngine;
 
 // Il s'agit de la classe dans laquelle vous allez implémenter la machine à état. Vous aurez tout particulièrement à
 // compléter la méthode "ChangeCharacterState" (Vous aurez pour cela besoin de créer une énumération des prochains états)
@@ -18,13 +19,17 @@ public class CharacterStateMachine : MonoBehaviour
     private Character character;
     private float throwTrashCheckTimer;
 
-    public string CurrentStateName => "None";
+    public enum CharacterNextState { MoveToDestination, Work, Eat, Socialise, Sleep, PickUpTrash, ThrowTrash, Greet }
+    public enum CityCharacterTrashBehaviour{ Ignore, PickUp, Throw }
+
+    private CharacterState currentState = null;
     public CityCharacterTrashBehaviour TrashBehaviour => trashBehaviour;
 
     private void Awake()
     {
         // Get dependencies.
         character = GetComponent<Character>();
+        currentState = gameObject.AddComponent<CharacterStateMoveToDestination>();
 
         // Init timers.
         throwTrashCheckTimer = 0;
@@ -52,15 +57,52 @@ public class CharacterStateMachine : MonoBehaviour
         }
     }
 
-    private void ChangeCharacterState()
+    public void ChangeCharacterState(CharacterNextState nextState)
     {
-        // TODO : Mettre à jour la machine à état.
-    }  
-}
+        Destroy(currentState);
 
-public enum CityCharacterTrashBehaviour
-{
-    Ignore,
-    PickUp,
-    Throw
+        switch (nextState)
+        {
+            case CharacterNextState.MoveToDestination:
+                {
+                    currentState = gameObject.AddComponent<CharacterStateMoveToDestination>();
+                    break;
+                }
+            case CharacterNextState.Work:
+                {
+                    currentState = gameObject.AddComponent<CharacterStateWork>();
+                    break;
+                }
+            case CharacterNextState.Eat:
+                {
+                    currentState = gameObject.AddComponent<CharacterStateEat>();
+                    break;
+                }
+            case CharacterNextState.Socialise:
+                {
+                    currentState = gameObject.AddComponent<CharacterStateSocialise>();
+                    break;
+                }
+            case CharacterNextState.Sleep:
+                {
+                    currentState = gameObject.AddComponent<CharacterStateSleep>();
+                    break;
+                }
+            case CharacterNextState.PickUpTrash:
+                {
+                    currentState = gameObject.AddComponent<CharacterStatePickUpTrash>();
+                    break;
+                }
+            case CharacterNextState.ThrowTrash:
+                {
+                    currentState = gameObject.AddComponent<CharacterStateThrowTrash>();
+                    break;
+                }
+            case CharacterNextState.Greet:
+                {
+                    currentState = gameObject.AddComponent<CharacterStateGreet>();
+                    break;
+                }
+        }
+    }  
 }

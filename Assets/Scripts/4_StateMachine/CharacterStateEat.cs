@@ -1,16 +1,19 @@
 using UnityEngine;
 
-public class CharacterStateEat : MonoBehaviour
+public class CharacterStateEat : CharacterState
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public override void MoveCharacter()
     {
-        
+        character.MakeInvisible();
+        characterVitals.LowerHunger();
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void ManageStateChange()
     {
-        
+        if (characterVitals.IsHungerBellowTarget)
+        {
+            character.MakeVisible();
+            characterStateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.MoveToDestination);
+        }
     }
 }

@@ -12905,6 +12905,41 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8711671408477927820, guid: 9c441b31bf90fc44789f89ee5e216bb5, type: 3}
   m_PrefabInstance: {fileID: 1407901490}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1413919806 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6816198358589049870, guid: 3cef66dc96052eb4582321aa644f04aa, type: 3}
+  m_PrefabInstance: {fileID: 1590660908963333345}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1413919808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1413919806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 590127f27d3996d4ab5973160e29c3a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lookAtNextAction:
+    m_Name: Look At Next
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 0f229d0a-c3af-4638-aaf2-e02e2cd285b7
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  lookAtPrevAction:
+    m_Name: Look At Prev
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 59e3df94-886e-42a5-869f-bec1124ff5c3
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
 --- !u!1001 &1415723447
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20562,6 +20597,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1817978364724054044, guid: 3cef66dc96052eb4582321aa644f04aa, type: 3}
+      propertyPath: m_text
+      value: Alice
+      objectReference: {fileID: 0}
+    - target: {fileID: 1817978364724054044, guid: 3cef66dc96052eb4582321aa644f04aa, type: 3}
+      propertyPath: m_margin.w
+      value: 30.55726
+      objectReference: {fileID: 0}
+    - target: {fileID: 1817978364724054044, guid: 3cef66dc96052eb4582321aa644f04aa, type: 3}
+      propertyPath: m_margin.z
+      value: 9.262573
+      objectReference: {fileID: 0}
     - target: {fileID: 2219881281535125802, guid: 3cef66dc96052eb4582321aa644f04aa, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -20689,7 +20736,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6816198358589049870, guid: 3cef66dc96052eb4582321aa644f04aa, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1413919808}
   m_SourcePrefab: {fileID: 100100000, guid: 3cef66dc96052eb4582321aa644f04aa, type: 3}
 --- !u!1001 &1724846587806276032
 PrefabInstance:

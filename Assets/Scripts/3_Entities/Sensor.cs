@@ -1,7 +1,7 @@
 using System.Linq;
 using UnityEngine;
 
-public class Sensor : MonoBehaviour
+public class CharacterSensor : MonoBehaviour
 {
     private Character character;
     private CharacterBlackboard blackboard;
@@ -17,8 +17,6 @@ public class Sensor : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.isTrigger)
-            return;
 
         if (other.TryGetComponent(out Trash trash))
         {
@@ -28,15 +26,17 @@ public class Sensor : MonoBehaviour
 
         else if (other.TryGetComponent(out Character otherCharacter))
         {
-            if (blackboard.Friends.Contains(otherCharacter))
-                blackboard.LastSeenFriend = otherCharacter;
+            if (!other.isTrigger)
+            {
+                if (blackboard.Friends.Contains(otherCharacter))
+                    blackboard.LastSeenFriend = otherCharacter;
+            }
+           
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.isTrigger)
-            return;
 
         if (other.TryGetComponent(out Trash trash))
         {

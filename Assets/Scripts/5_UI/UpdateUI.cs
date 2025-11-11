@@ -1,17 +1,25 @@
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class UpdateUI : MonoBehaviour
 {
-
     private GameManager gameManager;
     private Character[] Characters;
-
-    private TMPro.TextMeshProUGUI[] UiStats;
+    private int currentCharacterIndex = 0;
 
     [Header("Input Action Asset Reference")]
-    public InputActionAsset playerControlsAsset;
+    [SerializeField] private InputActionAsset playerControlsAsset;
+
+    [Header("UI References")]
+    [SerializeField] private TextMeshProUGUI characterNameText;
+    [SerializeField] private TextMeshProUGUI currentStateNameText;
+    [SerializeField] private Image characterAvatarImage;
+    
+    
+    private UpdateCharacterVitals vitalsUI;
 
     private InputAction nextCharacterAction;
     private InputAction previousCharacterAction;
@@ -20,16 +28,18 @@ public class UpdateUI : MonoBehaviour
     private const string NextActionName = "NextCharacter";
     private const string PreviousActionName = "PreviousCharacter";
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        vitalsUI = GetComponent<UpdateCharacterVitals>();
+
         gameManager = Finder.GameManager;
-        UiStats = GetComponentsInChildren<TMPro.TextMeshProUGUI>();
-        Characters = gameManager.CityObjects.Characters;
+
+        Characters = gameManager.CityObjects.Characters
+            .Where(c => c != null)
+            .ToArray();
 
         if (playerControlsAsset != null)
         {
-
             var playerMap = playerControlsAsset.FindActionMap(PlayerMapName);
 
             if (playerMap != null)
@@ -55,16 +65,17 @@ public class UpdateUI : MonoBehaviour
             nextCharacterAction.performed += OnNextCharacterPerformed;
             previousCharacterAction.performed += OnPreviousCharacterPerformed;
         }
-
+        UpdateCharacterDisplay();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (nextCharacterAction.IsPressed()) { 
-            Debug.Log("j'ai peser sur x");
-        }
+        UpdateCharacterState();
 
+        if (vitalsUI != null)
+        {
+            vitalsUI.UpdateVitalsUI();
+        }
     }
 
     void OnNextCharacterPerformed(InputAction.CallbackContext context)
@@ -79,16 +90,101 @@ public class UpdateUI : MonoBehaviour
 
     private void CycleTarget(int direction)
     {
+        if (Characters == null || Characters.Length == 0) return;
+
+        Character previousCharacter = Characters[currentCharacterIndex];
+
+        int newIndex = currentCharacterIndex + direction;
+
+        currentCharacterIndex = (newIndex % Characters.Length + Characters.Length) % Characters.Length;
+
+        if (previousCharacter != null)
+        {
+            previousCharacter.HidePointer();
+        }
+
+        if (Characters[currentCharacterIndex] != null)
+        {
+            Debug.Log($"Passage au personnage : {Characters[currentCharacterIndex].FullName}");
+        }
+        else
+        {
+            Debug.LogWarning($"Passage à un index où le personnage est null : {currentCharacterIndex}");
+        }
+
+        UpdateCharacterDisplay();
+    }
+
+    private void UpdateCharacterDisplay()
+    {
+        if (Characters == null || Characters.Length == 0 || currentCharacterIndex < 0 || currentCharacterIndex >= Characters.Length)
+        {
+            if (characterNameText != null) characterNameText.text = "Aucun Personnage Disponible";
+            if (currentStateNameText != null) currentStateNameText.text = "N/A";
+
+            if (vitalsUI != null) vitalsUI.SetTarget(null);
+
+            return;
+        }
+
+        Character character = Characters[currentCharacterIndex];
+
+        if (character == null)
+        {
+            if (characterNameText != null) characterNameText.text = "ERREUR : Personnage Déréférencé";
+            if (currentStateNameText != null) currentStateNameText.text = "N/A";
+            if (characterAvatarImage != null) characterAvatarImage.sprite = null;
+
+            if (vitalsUI != null) vitalsUI.SetTarget(null);
+
+            return;
+        }
+
+        if (characterNameText != null)
+        {
+            characterNameText.text = character.FullName;
+        }
+
+        if (characterAvatarImage != null)
+        {
+            characterAvatarImage.sprite = character.Avatar;
+        }
+
+        if (vitalsUI != null)
+        {
+            vitalsUI.SetTarget(character);
+        }
+
+        UpdateCharacterState();
+        character.ShowPointer();
+    }
+
+    private void UpdateCharacterState()
+    {
+        if (Characters == null || Characters.Length == 0) return;
+
+        Character character = Characters[currentCharacterIndex];
+
+        if (character == null) return;
+
+        CharacterStateMachine stateMachine = character.GetComponent<CharacterStateMachine>();
+        if (currentStateNameText != null && stateMachine != null)
+        {
+            currentStateNameText.text = $"État : {stateMachine.CurrentStateName}";
+        }
     }
 
     private void OnDisable()
     {
-        if (nextCharacterAction != null && previousCharacterAction != null)
+        if (nextCharacterAction != null)
         {
             nextCharacterAction.performed -= OnNextCharacterPerformed;
-            previousCharacterAction.performed -= OnPreviousCharacterPerformed;
-
             nextCharacterAction.Disable();
+        }
+
+        if (previousCharacterAction != null)
+        {
+            previousCharacterAction.performed -= OnPreviousCharacterPerformed;
             previousCharacterAction.Disable();
         }
     }

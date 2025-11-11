@@ -20,6 +20,7 @@ GameObject:
   - component: {fileID: 4972603572126591555}
   - component: {fileID: 4625891841882623748}
   - component: {fileID: 7691930055141097310}
+  - component: {fileID: 7567995690049479034}
   m_Layer: 0
   m_Name: BaseCharacter
   m_TagString: Untagged
@@ -59,7 +60,6 @@ MonoBehaviour:
   <Avatar>k__BackingField: {fileID: 0}
   pointer: {fileID: 7887390569648689585}
   destinationReachedDistance: 0.5
-  initialDestination: {x: 0, y: 0, z: 0}
 --- !u!114 &5189816781710339723
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76,6 +76,8 @@ MonoBehaviour:
   <Workplace>k__BackingField: {fileID: 0}
   <Friends>k__BackingField: []
   <ShouldThrowTrash>k__BackingField: 0
+  <LastSeenTrash>k__BackingField: {fileID: 0}
+  <LastSeenFriend>k__BackingField: {fileID: 0}
 --- !u!114 &1374310876092221418
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -333,6 +335,18 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &7567995690049479034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2637105231329891834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea5f4537f16ffae4999d8dd076ecf36d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7887390569648689585
 GameObject:
   m_ObjectHideFlags: 0

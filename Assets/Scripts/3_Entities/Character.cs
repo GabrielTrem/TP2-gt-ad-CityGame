@@ -91,9 +91,10 @@ public class Character : MonoBehaviour, IDestination
         chosenPoint.IsAvailable = false;
     }
 
-    // TODO : Enlever la méthode Start. Ce n'est que pour la courte démo quand vous partez le jeu la première fois.
-    //        Enlever aussi le [SerializedField] "initialDestination" par la même occasion.
-    //        Vous pourrez mettre une nouvelle méthode Start si vous en avez besoin.
+    private void Start()
+    {
+        stateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.MoveToDestination);
+    }
 
     public void NavigateTo(IDestination destination)
     {

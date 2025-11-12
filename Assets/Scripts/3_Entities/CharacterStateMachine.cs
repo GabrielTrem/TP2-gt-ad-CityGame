@@ -73,13 +73,13 @@ public class CharacterStateMachine : MonoBehaviour
                         {
                             character.Blackboard.CurrentDestination = GetRandomBuilding(character.Blackboard.FoodBuildings);
                         }
-                        else if (character.Vitals.IsLonelinessAboveThreshold)
-                        {
-                            character.Blackboard.CurrentDestination = GetRandomBuilding(character.Blackboard.SocialBuildings);
-                        }
                         else if (character.Vitals.IsSleepinessAboveThreshold)
                         {
                             character.Blackboard.CurrentDestination = character.Blackboard.House;
+                        }
+                        else if (character.Vitals.IsLonelinessAboveThreshold)
+                        {
+                            character.Blackboard.CurrentDestination = GetRandomBuilding(character.Blackboard.SocialBuildings);
                         }
                         else
                         {

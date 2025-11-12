@@ -9,42 +9,41 @@ public class CharacterSensor : MonoBehaviour
 
     private void Awake()
     {
-        character = GetComponentInParent<Character>();
-        blackboard = character.Blackboard;
+        character = GetComponent<Character>();
         sphereCollider = GetComponent<SphereCollider>();
         sphereCollider.isTrigger = true;
+    }
+
+    private void Start()
+    {
+        blackboard = character.Blackboard;
     }
 
     private void OnTriggerEnter(Collider other)
     {
 
-        if (other.TryGetComponent(out Trash trash))
+        Trash trash = other.gameObject.GetComponent<Trash>();
+        if (trash != null)
         {
-            if (character.Vitals)
-                blackboard.LastSeenTrash = trash;
+            blackboard.LastSeenTrash = trash;
         }
-
-        else if (other.TryGetComponent(out Character otherCharacter))
+        Character otherCharacter = other.gameObject.GetComponent<Character>();
+        if (otherCharacter != null)
         {
-            if (!other.isTrigger)
-            {
-                if (blackboard.Friends.Contains(otherCharacter))
-                    blackboard.LastSeenCharacter = otherCharacter;
-            }
-           
+            blackboard.LastSeenCharacter = otherCharacter;
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-
-        if (other.TryGetComponent(out Trash trash))
+        Trash trash = other.gameObject.GetComponent<Trash>();
+        if (trash != null)
         {
             if (blackboard.LastSeenTrash == trash)
                 blackboard.LastSeenTrash = null;
         }
-
-        else if (other.TryGetComponent(out Character otherCharacter))
+        Character otherCharacter = other.gameObject.GetComponent<Character>();
+        if (otherCharacter != null)
         {
             if (blackboard.LastSeenCharacter == otherCharacter)
                 blackboard.LastSeenCharacter = null;

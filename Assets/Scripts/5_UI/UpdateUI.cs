@@ -103,15 +103,6 @@ public class UpdateUI : MonoBehaviour
             previousCharacter.HidePointer();
         }
 
-        if (Characters[currentCharacterIndex] != null)
-        {
-            Debug.Log($"Passage au personnage : {Characters[currentCharacterIndex].FullName}");
-        }
-        else
-        {
-            Debug.LogWarning($"Passage à un index où le personnage est null : {currentCharacterIndex}");
-        }
-
         UpdateCharacterDisplay();
     }
 

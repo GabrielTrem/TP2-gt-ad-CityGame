@@ -11630,6 +11630,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5489036386304018604, guid: 1b68f33fea91348438211463abdf97ef, type: 3}
   m_PrefabInstance: {fileID: 1217464396}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1225485404 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7637389154850715525, guid: 57e4fb2497247b4439aa63e4870cfb12, type: 3}
+  m_PrefabInstance: {fileID: 1699694147}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8412bb912b71478181c9b9c845bd7a7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CityCharacter
 --- !u!1 &1233042355
 GameObject:
   m_ObjectHideFlags: 0
@@ -13501,7 +13512,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CityGameController
   cityObjects:
     characters:
-    - {fileID: 0}
+    - {fileID: 1225485404}
     - {fileID: 480310741}
     - {fileID: 1200905276}
     - {fileID: 1141386775}

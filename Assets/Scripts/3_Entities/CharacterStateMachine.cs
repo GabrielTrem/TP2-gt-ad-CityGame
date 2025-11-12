@@ -22,7 +22,7 @@ public class CharacterStateMachine : MonoBehaviour
     public enum CharacterNextState { MoveToDestination, Work, Eat, Socialise, Sleep, PickUpTrash, ThrowTrash, Greet }
     public enum CityCharacterTrashBehaviour{ Ignore, PickUp, Throw }
 
-    public string CurrentStateName => "None";
+    public string CurrentStateName = "None";
 
     private CharacterState currentState = null;
     public CityCharacterTrashBehaviour TrashBehaviour => trashBehaviour;
@@ -62,6 +62,7 @@ public class CharacterStateMachine : MonoBehaviour
     public void ChangeCharacterState(CharacterNextState nextState)
     {
         Destroy(currentState);
+        CurrentStateName = nextState.ToString();
 
         switch (nextState)
         {

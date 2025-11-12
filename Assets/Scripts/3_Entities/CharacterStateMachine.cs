@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Unity.VisualScripting;
+using UnityEngine;
 
 // Il s'agit de la classe dans laquelle vous allez implémenter la machine à état. Vous aurez tout particulièrement à
 // compléter la méthode "ChangeCharacterState" (Vous aurez pour cela besoin de créer une énumération des prochains états)
@@ -18,13 +19,17 @@ public class CharacterStateMachine : MonoBehaviour
     private Character character;
     private float throwTrashCheckTimer;
 
-    public string CurrentStateName => "None";
+    public enum CharacterNextState { MoveToDestination, Work, Eat, Socialise, Sleep, PickUpTrash, ThrowTrash, Greet }
+    public enum CityCharacterTrashBehaviour{ Ignore, PickUp, Throw }
+
+    private CharacterState currentState = null;
     public CityCharacterTrashBehaviour TrashBehaviour => trashBehaviour;
 
     private void Awake()
     {
         // Get dependencies.
         character = GetComponent<Character>();
+        currentState = gameObject.AddComponent<CharacterStateMoveToDestination>();
 
         // Init timers.
         throwTrashCheckTimer = 0;
@@ -52,16 +57,81 @@ public class CharacterStateMachine : MonoBehaviour
         }
     }
 
-    private void ChangeCharacterState()
+    public void ChangeCharacterState(CharacterNextState nextState)
     {
-        // TODO : Mettre à jour la machine à état.
-        
-    }  
-}
+        Destroy(currentState);
 
-public enum CityCharacterTrashBehaviour
-{
-    Ignore,
-    PickUp,
-    Throw
+        switch (nextState)
+        {
+            case CharacterNextState.MoveToDestination:
+                {
+                    if (character.Blackboard.currentDestination == null)
+                    {
+                        if (character.Vitals.IsHungerAboveThreshold)
+                        {
+                            character.Blackboard.currentDestination = GetRandomBuilding(character.Blackboard.FoodBuildings);
+                        }
+                        else if (character.Vitals.IsLonelinessAboveThreshold)
+                        {
+                            character.Blackboard.currentDestination = GetRandomBuilding(character.Blackboard.SocialBuildings);
+                        }
+                        else if (character.Vitals.IsSleepinessAboveThreshold)
+                        {
+                            character.Blackboard.currentDestination = character.Blackboard.House;
+                        }
+                        else
+                        {
+                            character.Blackboard.currentDestination = character.Blackboard.Workplace;
+                        }
+                    }
+                    currentState = gameObject.AddComponent<CharacterStateMoveToDestination>();
+                    break;
+                }
+            case CharacterNextState.Work:
+                {
+                    character.MakeInvisible();
+                    currentState = gameObject.AddComponent<CharacterStateWork>();
+                    break;
+                }
+            case CharacterNextState.Eat:
+                {
+                    character.MakeInvisible();
+                    currentState = gameObject.AddComponent<CharacterStateEat>();
+                    break;
+                }
+            case CharacterNextState.Socialise:
+                {
+                    character.MakeInvisible();
+                    currentState = gameObject.AddComponent<CharacterStateSocialise>();
+                    break;
+                }
+            case CharacterNextState.Sleep:
+                {
+                    character.MakeInvisible();
+                    currentState = gameObject.AddComponent<CharacterStateSleep>();
+                    break;
+                }
+            case CharacterNextState.PickUpTrash:
+                {
+                    currentState = gameObject.AddComponent<CharacterStatePickUpTrash>();
+                    break;
+                }
+            case CharacterNextState.ThrowTrash:
+                {
+                    currentState = gameObject.AddComponent<CharacterStateThrowTrash>();
+                    break;
+                }
+            case CharacterNextState.Greet:
+                {
+                    currentState = gameObject.AddComponent<CharacterStateGreet>();
+                    break;
+                }
+        }
+    }
+
+    private Building GetRandomBuilding(Building[] buildings)
+    {
+        int randomIndex = UnityEngine.Random.Range(0, buildings.Length - 1);
+        return buildings[randomIndex];
+    }
 }

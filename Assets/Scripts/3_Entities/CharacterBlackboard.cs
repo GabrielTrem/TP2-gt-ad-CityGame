@@ -25,8 +25,10 @@ public class CharacterBlackboard : MonoBehaviour
     
     [Header("Memory")]
     [field:SerializeField] public bool ShouldThrowTrash { get; set; }
-    [field: SerializeField] public Trash LastSeenTrash { get; set; }
-    [field: SerializeField] public Character LastSeenFriend { get; set; }
+
+    [field: SerializeField] public IDestination currentDestination { get; set; }
+    [field: SerializeField] public Character lastSeenFriend { get; set; }
+    [field: SerializeField] public Trash lastSeenTrash { get; set; }
 
     // TODO : Ajouter ici les autres éléments à conserver en mémoire.
     //        Notez que la syntaxe est légèrement différente de ce que vous avez été habitué : il y a un "field:" devant

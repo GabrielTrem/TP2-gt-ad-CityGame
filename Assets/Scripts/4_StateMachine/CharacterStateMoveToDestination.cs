@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using static CharacterStateMachine;
@@ -7,7 +8,7 @@ public class CharacterStateMoveToDestination : CharacterState
 {
     private void Start()
     {
-        character.NavigateTo(characterBlackboard.currentDestination);
+        character.NavigateTo(characterBlackboard.CurrentDestination);
     }
     public override void UpdateCharacterVitals()
     {
@@ -18,11 +19,11 @@ public class CharacterStateMoveToDestination : CharacterState
 
     public override void ManageStateChange()
     {
-        if (characterBlackboard.lastSeenFriend != null)
+        if (characterBlackboard.LastSeenCharacter != null && characterBlackboard.Friends.Contains(characterBlackboard.LastSeenCharacter))
         {
             characterStateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.Greet);
         }
-        else if (characterBlackboard.lastSeenTrash != null) 
+        else if (characterBlackboard.LastSeenTrash != null) 
         {
             if(characterStateMachine.TrashBehaviour == CityCharacterTrashBehaviour.PickUp)
             {
@@ -34,9 +35,9 @@ public class CharacterStateMoveToDestination : CharacterState
             }
         }
 
-        if (character.IsCloseTo(characterBlackboard.currentDestination))
+        if (character.IsCloseTo(characterBlackboard.CurrentDestination))
         {
-            Building currentDestinationBuilding = (Building)characterBlackboard.currentDestination;
+            Building currentDestinationBuilding = (Building)characterBlackboard.CurrentDestination;
             switch (currentDestinationBuilding.Type)
             {
                 case Building.CityBuildingType.Food:
@@ -55,7 +56,7 @@ public class CharacterStateMoveToDestination : CharacterState
                     characterStateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.Work);
                     break;
             }
-            characterBlackboard.currentDestination = null;
+            characterBlackboard.CurrentDestination = null;
         }
     }
 }

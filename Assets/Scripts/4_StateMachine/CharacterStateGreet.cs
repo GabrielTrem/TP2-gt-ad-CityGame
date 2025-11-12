@@ -6,7 +6,7 @@ public class CharacterStateGreet : CharacterState
     public void Start()
     {
         character.CancelNavigate();
-        character.GreetCharacter(characterBlackboard.lastSeenFriend);
+        character.GreetCharacter(characterBlackboard.LastSeenCharacter);
     }
     public override void UpdateCharacterVitals()
     {

@@ -29,7 +29,7 @@ public class CharacterSensor : MonoBehaviour
             if (!other.isTrigger)
             {
                 if (blackboard.Friends.Contains(otherCharacter))
-                    blackboard.LastSeenFriend = otherCharacter;
+                    blackboard.LastSeenCharacter = otherCharacter;
             }
            
         }
@@ -46,8 +46,8 @@ public class CharacterSensor : MonoBehaviour
 
         else if (other.TryGetComponent(out Character otherCharacter))
         {
-            if (blackboard.LastSeenFriend == otherCharacter)
-                blackboard.LastSeenFriend = null;
+            if (blackboard.LastSeenCharacter == otherCharacter)
+                blackboard.LastSeenCharacter = null;
         }
     }
 

@@ -4,15 +4,15 @@ public class CharacterStatePickUpTrash : CharacterState
 {
     public void Start()
     {
-        character.NavigateTo(characterBlackboard.lastSeenTrash);
+        character.NavigateTo(characterBlackboard.LastSeenTrash);
     }
 
     private void Update()
     {
-        if (character.IsCloseTo(characterBlackboard.lastSeenTrash) && !character.IsPickingTrash())
+        if (character.IsCloseTo(characterBlackboard.LastSeenTrash) && !character.IsPickingTrash())
         {
-            character.PickUpTrash(characterBlackboard.lastSeenTrash);
-            characterBlackboard.lastSeenTrash = null;
+            character.PickUpTrash(characterBlackboard.LastSeenTrash);
+            characterBlackboard.LastSeenTrash = null;
         }
     }
 

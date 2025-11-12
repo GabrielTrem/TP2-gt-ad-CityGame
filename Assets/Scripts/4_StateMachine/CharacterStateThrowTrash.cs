@@ -4,15 +4,15 @@ public class CharacterStateThrowTrash : CharacterState
 {
     private void Start()
     {
-        character.NavigateTo(characterBlackboard.lastSeenTrash);
+        character.NavigateTo(characterBlackboard.LastSeenTrash);
     }
 
     private void Update()
     {
-        if (character.IsCloseTo(characterBlackboard.lastSeenTrash) && !character.IsThrowingTrash())
+        if (character.IsCloseTo(characterBlackboard.LastSeenTrash) && !character.IsThrowingTrash())
         {
             character.ThrowTrash();
-            characterBlackboard.lastSeenTrash = null;
+            characterBlackboard.LastSeenTrash = null;
         }
     }
 

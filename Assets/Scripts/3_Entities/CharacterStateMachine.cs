@@ -22,6 +22,8 @@ public class CharacterStateMachine : MonoBehaviour
     public enum CharacterNextState { MoveToDestination, Work, Eat, Socialise, Sleep, PickUpTrash, ThrowTrash, Greet }
     public enum CityCharacterTrashBehaviour{ Ignore, PickUp, Throw }
 
+    public string CurrentStateName => "None";
+
     private CharacterState currentState = null;
     public CityCharacterTrashBehaviour TrashBehaviour => trashBehaviour;
 
@@ -65,23 +67,23 @@ public class CharacterStateMachine : MonoBehaviour
         {
             case CharacterNextState.MoveToDestination:
                 {
-                    if (character.Blackboard.currentDestination == null)
+                    if (character.Blackboard.CurrentDestination == null)
                     {
                         if (character.Vitals.IsHungerAboveThreshold)
                         {
-                            character.Blackboard.currentDestination = GetRandomBuilding(character.Blackboard.FoodBuildings);
+                            character.Blackboard.CurrentDestination = GetRandomBuilding(character.Blackboard.FoodBuildings);
                         }
                         else if (character.Vitals.IsLonelinessAboveThreshold)
                         {
-                            character.Blackboard.currentDestination = GetRandomBuilding(character.Blackboard.SocialBuildings);
+                            character.Blackboard.CurrentDestination = GetRandomBuilding(character.Blackboard.SocialBuildings);
                         }
                         else if (character.Vitals.IsSleepinessAboveThreshold)
                         {
-                            character.Blackboard.currentDestination = character.Blackboard.House;
+                            character.Blackboard.CurrentDestination = character.Blackboard.House;
                         }
                         else
                         {
-                            character.Blackboard.currentDestination = character.Blackboard.Workplace;
+                            character.Blackboard.CurrentDestination = character.Blackboard.Workplace;
                         }
                     }
                     currentState = gameObject.AddComponent<CharacterStateMoveToDestination>();

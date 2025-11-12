@@ -2,9 +2,14 @@ using UnityEngine;
 
 public class CharacterStateEat : CharacterState
 {
-    public override void MoveCharacter()
+
+    private void Start()
     {
         character.MakeInvisible();
+    }
+
+    public override void UpdateCharacterVitals()
+    {
         characterVitals.LowerHunger();
     }
 

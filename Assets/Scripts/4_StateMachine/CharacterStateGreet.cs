@@ -2,13 +2,23 @@ using UnityEngine;
 
 public class CharacterStateGreet : CharacterState
 {
-    public override void MoveCharacter()
+
+    public void Start()
     {
-        //character.GreetCharacter();
+        character.CancelNavigate();
+        character.GreetCharacter(characterBlackboard.lastSeenFriend);
     }
+    public override void UpdateCharacterVitals()
+    {
+        characterVitals.LowerLoneliness();
+    }
+
     public override void ManageStateChange()
     {
-        throw new System.NotImplementedException();
+        if (!character.IsGreetingCharacter()) 
+        {
+            characterStateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.MoveToDestination);
+        }
     }
 
 }

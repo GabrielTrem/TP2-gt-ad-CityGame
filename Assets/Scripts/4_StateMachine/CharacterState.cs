@@ -17,11 +17,11 @@ public abstract class CharacterState : MonoBehaviour
 
     void Update()
     {
-        MoveCharacter();
+        UpdateCharacterVitals();
         ManageStateChange();
     }
 
 
-    public abstract void MoveCharacter();
+    public abstract void UpdateCharacterVitals();
     public abstract void ManageStateChange();
 }

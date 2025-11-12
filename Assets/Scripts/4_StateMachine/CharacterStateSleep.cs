@@ -2,7 +2,12 @@ using UnityEngine;
 
 public class CharacterStateSleep : CharacterState
 {
-    public override void MoveCharacter()
+    private void Start()
+    {
+        character.MakeInvisible();
+    }
+
+    public override void UpdateCharacterVitals()
     {
         characterVitals.LowerSleepiness();
     }
@@ -14,5 +19,4 @@ public class CharacterStateSleep : CharacterState
             characterStateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.MoveToDestination);
         }
     }
-
 }

@@ -65,26 +65,49 @@ public class CharacterStateMachine : MonoBehaviour
         {
             case CharacterNextState.MoveToDestination:
                 {
+                    if (character.Blackboard.currentDestination == null)
+                    {
+                        if (character.Vitals.IsHungerAboveThreshold)
+                        {
+                            character.Blackboard.currentDestination = GetRandomBuilding(character.Blackboard.FoodBuildings);
+                        }
+                        else if (character.Vitals.IsLonelinessAboveThreshold)
+                        {
+                            character.Blackboard.currentDestination = GetRandomBuilding(character.Blackboard.SocialBuildings);
+                        }
+                        else if (character.Vitals.IsSleepinessAboveThreshold)
+                        {
+                            character.Blackboard.currentDestination = character.Blackboard.House;
+                        }
+                        else
+                        {
+                            character.Blackboard.currentDestination = character.Blackboard.Workplace;
+                        }
+                    }
                     currentState = gameObject.AddComponent<CharacterStateMoveToDestination>();
                     break;
                 }
             case CharacterNextState.Work:
                 {
+                    character.MakeInvisible();
                     currentState = gameObject.AddComponent<CharacterStateWork>();
                     break;
                 }
             case CharacterNextState.Eat:
                 {
+                    character.MakeInvisible();
                     currentState = gameObject.AddComponent<CharacterStateEat>();
                     break;
                 }
             case CharacterNextState.Socialise:
                 {
+                    character.MakeInvisible();
                     currentState = gameObject.AddComponent<CharacterStateSocialise>();
                     break;
                 }
             case CharacterNextState.Sleep:
                 {
+                    character.MakeInvisible();
                     currentState = gameObject.AddComponent<CharacterStateSleep>();
                     break;
                 }
@@ -104,5 +127,11 @@ public class CharacterStateMachine : MonoBehaviour
                     break;
                 }
         }
-    }  
+    }
+
+    private Building GetRandomBuilding(Building[] buildings)
+    {
+        int randomIndex = UnityEngine.Random.Range(0, buildings.Length - 1);
+        return buildings[randomIndex];
+    }
 }

@@ -2,7 +2,11 @@ using UnityEngine;
 
 public class CharacterStateSocialise : CharacterState
 {
-    public override void MoveCharacter()
+    private void Start()
+    {
+        character.MakeInvisible();
+    }
+    public override void UpdateCharacterVitals()
     {
         characterVitals.LowerLoneliness();
     }

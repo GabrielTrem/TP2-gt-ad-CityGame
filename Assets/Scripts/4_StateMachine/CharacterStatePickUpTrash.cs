@@ -2,13 +2,32 @@ using UnityEngine;
 
 public class CharacterStatePickUpTrash : CharacterState
 {
-    public override void MoveCharacter()
+    public void Start()
     {
-        //character.PickUpTrash();
+        character.NavigateTo(characterBlackboard.lastSeenTrash);
+    }
+
+    private void Update()
+    {
+        if (character.IsCloseTo(characterBlackboard.lastSeenTrash) && !character.IsPickingTrash())
+        {
+            character.PickUpTrash(characterBlackboard.lastSeenTrash);
+            characterBlackboard.lastSeenTrash = null;
+        }
+    }
+
+    public override void UpdateCharacterVitals()
+    {
+        characterVitals.RaiseHunger();
+        characterVitals.RaiseLoneliness();
+        characterVitals.RaiseSleepiness();
     }
     public override void ManageStateChange()
     {
-        throw new System.NotImplementedException();
+        if (!character.IsPickingTrash()) 
+        {
+            characterStateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.MoveToDestination);
+        }
     }
 
 }

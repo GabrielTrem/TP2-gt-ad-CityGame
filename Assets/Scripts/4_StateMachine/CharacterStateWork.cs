@@ -2,8 +2,11 @@ using UnityEngine;
 
 public class CharacterStateWork : CharacterState
 {
-
-    public override void MoveCharacter()
+    private void Start()
+    {
+        character.MakeInvisible();
+    }
+    public override void UpdateCharacterVitals()
     {
         characterVitals.RaiseHunger();
         characterVitals.RaiseLoneliness();
@@ -13,6 +16,7 @@ public class CharacterStateWork : CharacterState
     {
         if (characterVitals.IsHungerAboveThreshold || characterVitals.IsLonelinessAboveThreshold || characterVitals.IsSleepinessAboveThreshold)
         {
+            character.MakeVisible();
             characterStateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.MoveToDestination);
         }
     }

@@ -2,25 +2,32 @@ using UnityEngine;
 
 public class CharacterStateThrowTrash : CharacterState
 {
+    private void Start()
+    {
+        character.NavigateTo(characterBlackboard.lastSeenTrash);
+    }
+
+    private void Update()
+    {
+        if (character.IsCloseTo(characterBlackboard.lastSeenTrash) && !character.IsThrowingTrash())
+        {
+            character.ThrowTrash();
+            characterBlackboard.lastSeenTrash = null;
+        }
+    }
+
+    public override void UpdateCharacterVitals()
+    {
+        characterVitals.RaiseHunger();
+        characterVitals.RaiseLoneliness();
+        characterVitals.RaiseSleepiness();
+    }
+
     public override void ManageStateChange()
     {
-        throw new System.NotImplementedException();
-    }
-
-    public override void MoveCharacter()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        if (!character.IsThrowingTrash())
+        { 
+            characterStateMachine.ChangeCharacterState(CharacterStateMachine.CharacterNextState.MoveToDestination);
+        }
     }
 }
